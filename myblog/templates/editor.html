@@ -1,0 +1,19 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+  <script type="text/javascript" src="{% static 'js/tinymce/js/tinymce/tinymce.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/tinymce/custom.js' %}" ></script>
+</head>
+<body>
+<form method="post" >
+    {% csrf_token %}
+    <input type="hidden" name="storyForm" value="storyForm"/>
+ 	{{form.as_p}}   
+    <button type="submit">Submit</button>
+  </form>
+ 
+
+</body>
+</html>
