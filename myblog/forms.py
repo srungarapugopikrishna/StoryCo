@@ -6,4 +6,4 @@ class MainForm(forms.ModelForm):
 
     class Meta:
         model = Story
-        fields = ('title', 'text','pub_date')
+        fields = ('title', 'text')
