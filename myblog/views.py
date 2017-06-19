@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from .forms import MainForm
 from .models import Story 
+from django.shortcuts import render_to_response
 # Create your views here.
 def index(request):
     return HttpResponse("Hello, Welcome to the UNIVERSE.")
@@ -11,7 +12,10 @@ def index(request):
 @login_required
 def home(request):
 	#return HttpResponse("Logged in successfully")
-	return render(request, 'home.html')
+
+	all_stories = Story.objects.all()
+	data = {"stories": all_stories}
+	return render_to_response('home.html', data)
 def registered():
 	return HttpResponse("Registered in successfully")
 def editor(request):
