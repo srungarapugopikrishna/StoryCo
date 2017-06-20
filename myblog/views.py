@@ -15,6 +15,7 @@ def home(request):
 
 	all_stories = Story.objects.all()
 	data = {"stories": all_stories}
+	#request.session['data'] = data
 	return render_to_response('home.html', data)
 def registered():
 	return HttpResponse("Registered in successfully")
@@ -30,3 +31,10 @@ def editor(request):
 		data = Story(title = request.POST.get('title'),text = request.POST.get('text'),created_by = request.user)
 		data.save()
 	return render(request, 'editor.html',context)
+def StoryPage(request,s_id):
+	all_stories = Story.objects.all()
+	data = {"stories": all_stories,
+			"s_id" : int(s_id),
+			}
+
+	return render_to_response('StoryPage.html',data)

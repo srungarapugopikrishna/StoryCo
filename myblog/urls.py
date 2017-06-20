@@ -6,6 +6,6 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
 	url(r'^home$', views.home, name='home'),
 	url(r'^editor$', views.editor, name='editor'),
-	# url(r'^formData$', views.formData, name='formData'),
+	url(r'^(?P<s_id>\d+)/StoryPage/$', views.StoryPage, name='StoryPage'),
 
 ]

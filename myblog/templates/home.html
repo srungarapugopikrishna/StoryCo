@@ -35,7 +35,7 @@
 </head> 
 <body> 
 <div id="navbar"> 
-  <ul> 
+  <ul>
   <li><a href="#">Home</a></li> 
   <li><a href="http://127.0.0.1:8000/myblog/editor">Start a story</a></li> 
   <li><a href="http://127.0.0.1:8000/accounts/logout/">Sign out</a></li>
@@ -51,9 +51,12 @@
   <li><a href="http://github.com">Link 5</a></li>  -->
   </ul> 
 </div> 
+<ul>
 {% for i in stories %}
-{{ i.title }}
+<li><a href="/myblog/{{i.id}}/StoryPage" >{{ i.title }}</li>
 {% endfor %}
+</ul>
+
 </body> 
 </html>
 

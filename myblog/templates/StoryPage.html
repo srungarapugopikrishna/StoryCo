@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% load i18n %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Justin Beaver fascinated by HTML</title>
+  </head>
+  <body>
+  {% for i in stories %}
+          {% if i.id == s_id %}
+    <article>
+      <header>
+        <h1>{{ i.title }}</h1>
+        <p>Posted by: {{ i.created_by }}</p>
+      </header>
+      <p>
+            {{ i.text|safe }}
+          {% endif %}
+        {% endfor %}
+      </p>
+    </article>
+  </body>
+</html>
