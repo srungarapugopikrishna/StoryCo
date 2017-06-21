@@ -6,17 +6,13 @@
     <title>Justin Beaver fascinated by HTML</title>
   </head>
   <body>
-  {% for i in stories %}
-          {% if i.id == s_id %}
     <article>
       <header>
-        <h1>{{ i.title }}</h1>
-        <p>Posted by: {{ i.created_by }}</p>
+        <h1>{{ curr_story.title }}</h1>
+        <p>Posted by: {{ curr_story.created_by }}</p>
       </header>
       <p>
-            {{ i.text|safe }}
-          {% endif %}
-        {% endfor %}
+            {{ curr_story.text|safe }}
       </p>
     </article>
   </body>

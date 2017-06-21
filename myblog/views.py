@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from .forms import MainForm
+from .forms import MainForm,SomeForm
 from .models import Story 
 from django.shortcuts import render_to_response
 # Create your views here.
@@ -32,9 +32,19 @@ def editor(request):
 		data.save()
 	return render(request, 'editor.html',context)
 def StoryPage(request,s_id):
-	all_stories = Story.objects.all()
-	data = {"stories": all_stories,
-			"s_id" : int(s_id),
+	all_stories = Story.objects.get(story_id=s_id)
+	data = {"curr_story": all_stories,
+			"s_id" : s_id,
 			}
 
+	print s_id
 	return render_to_response('StoryPage.html',data)
+
+def some_view(request):
+	if request.method == "POST":
+		print 'hereeeee'
+		form = SomeForm(request.POST)
+		if form.is_valid():
+			like = form.cleaned_data['like']
+			print like
+	return render(request, 'test.html', {'form' :form})
