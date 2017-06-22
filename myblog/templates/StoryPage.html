@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Justin Beaver fascinated by HTML</title>
+    <title>{{ curr_story.title }}</title>
   </head>
   <body>
     <article>
@@ -15,5 +15,8 @@
             {{ curr_story.text|safe }}
       </p>
     </article>
+    <form action="/myblog/{{curr_story.story_id}}/editor_child">
+    <input type="submit" value="continue next episode" />
+    </form>
   </body>
 </html>

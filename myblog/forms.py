@@ -14,4 +14,4 @@ class SomeForm(forms.Form):
                (3,3),
                (4,4),)
     
-    picked = forms.MultipleChoiceField(choices=CHOICES, widget=forms.RadioSelect())
+    like = forms.MultipleChoiceField(choices=CHOICES, widget=forms.RadioSelect())
