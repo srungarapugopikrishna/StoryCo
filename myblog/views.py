@@ -31,8 +31,6 @@ def editor(request):
 		print request.POST.get('pub_date')
 		data = Story(title = request.POST.get('title'),text = request.POST.get('text'),created_by = request.user)
 		data.save()
-		print (data.story_id)
-		s = Story.objects.get()
 	return render(request, 'editor.html',context)
 def editor_child(request,s_id):
 	context = {}
@@ -54,8 +52,22 @@ def editor_child(request,s_id):
 
 def StoryPage(request,s_id):
 	all_stories = Story.objects.get(story_id=s_id)
-	data = {"curr_story": all_stories,
+	all_relations = relations.objects.all()
+	id_list = []
+	parent_relation = []
+	for relation in all_relations:
+		if str(relation.parent_id) == str(all_stories.story_id):
+			print 'As Parent:'
+			print relation.parent_id, all_stories.story_id
+			id_list.append(relation)
+		elif str(relation.child_id) == str(all_stories.story_id):
+			print 'As Child:'
+			parent_relation = relation
+	#print 'idlen',len(id_list)
+	data = {"curr_story" : all_stories,
 			"s_id" : s_id,
+			"relations_data" : id_list,
+			"parent_relation" : parent_relation
 			}
 
 	print s_id

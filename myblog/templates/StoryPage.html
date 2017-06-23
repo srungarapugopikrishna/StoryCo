@@ -6,15 +6,29 @@
     <title>{{ curr_story.title }}</title>
   </head>
   <body>
+
     <article>
       <header>
         <h1>{{ curr_story.title }}</h1>
         <p>Posted by: {{ curr_story.created_by }}</p>
       </header>
+      <div style="width: 60%; height: 50%; background-color: green; float:left;">
       <p>
             {{ curr_story.text|safe }}
       </p>
     </article>
+    </div>
+    <div style="width: 40%; height: 50%; background-color: blue; float:right;">
+      <b>  Parent Stories: </b><br>
+      {{ parent_relation.parent_id }} | {{ parent_relation.child_id }} <br>
+      <b>Child Stories: </b><br>
+       {% for relation in relations_data %}
+         <b>{{ curr_story.story_id }}</b>
+        <li>{{ relation.parent_id }} | {{ relation.child_id }}</li>
+        {% endfor %}
+
+    </div>
+    <div style="width: 100%; height: 50%; background-color: red; clear:both">-</div>
     <form action="/myblog/{{curr_story.story_id}}/editor_child">
     <input type="submit" value="continue next episode" />
     </form>
