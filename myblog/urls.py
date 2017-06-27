@@ -9,4 +9,5 @@ urlpatterns = [
 	url(r'^(?P<s_id>.*)/editor_child/$', views.editor_child, name='editorChild'	),
 	url(r'^some_view$', views.some_view, name='some_view'),
 	url(r'^(?P<s_id>.*)/StoryPage/$', views.StoryPage, name='StoryPage'),
+	url(r'^get_data$', views.get_data, name='get_data'),
 ]
