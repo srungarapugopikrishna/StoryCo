@@ -83,10 +83,20 @@ def some_view(request):
 			print like
 	return render(request, 'test.html', {'form' :form})
 
-def get_data(request):
-	treeData = [
-		{
-			"name": "Top Level",
+def get_jsonData(parent_id):
+	all_stories = Story.objects.get(story_id=parent_id)
+	all_relations = relations.objects.all()
+	child_id_list =[]
+	for relation in all_relations:
+		if str(relation.parent_id) == str(all_stories.story_id):
+			print 'As Parent:'
+			print relation.parent_id, all_stories.story_id
+			child_id_list.append(relation)
+		elif str(relation.child_id) == str(all_stories.story_id):
+			print 'As Child:'
+			parent_relation = relation
+	data = {
+			"name": parent_id,
 			"parent": "null",
 			"children": [
 				{
@@ -108,31 +118,40 @@ def get_data(request):
 					"parent": "Top Level"
 				}
 			]
-		},
-		{
-			"name": "Top Level1",
+		}
+	return data
+
+def get_data(request):
+	treeData ={
+			"name": "Top Level",
 			"parent": "null",
 			"children": [
 				{
 					"name": "Level 2: A",
-					"parent": "Top Level1",
+					"parent": "Top Level",
 					"children": [
 						{
-							"name": "Son of A",
-							"parent": "Level 2: A"
+							"name": "Level 3: Son of A",
+							"parent": "Level 2: A",
+							"children": [
+								{
+									"name": "Level 4: Child",
+									"parent": "Level 3: Son of A",
+									"children": []
+								}
+							]
 						},
 						{
-							"name": "Daughter of A",
+							"name": "Level 3: Daughter of A",
 							"parent": "Level 2: A"
 						}
 					]
 				},
 				{
 					"name": "Level 2: B",
-					"parent": "Top Level1"
+					"parent": "Top Level"
 				}
 			]
 		}
-	]
-	json_string = json.dumps(treeData)
-	return render(request, 'index1.html', {'data' : json_string})
+
+	return render(request, 'index1.html', {'data' : treeData})

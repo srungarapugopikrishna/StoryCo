@@ -115,7 +115,7 @@ var svg = d3.select("body").append("svg")
 <!--root = treeData[0];-->
 var data = {{data|safe}}
 console.log(data)
-root = data[0]
+root = data
 console.log(root)
 root.x0 = height / 2;
 root.y0 = 0;
@@ -224,6 +224,5 @@ function click(d) {
 }
 
 </script>
-{{data}}
   </body>
 </html>
