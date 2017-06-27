@@ -82,3 +82,56 @@ def some_view(request):
 			like = form.cleaned_data['like']
 			print like
 	return render(request, 'test.html', {'form' :form})
+
+def get_data(request):
+	treeData = [
+		{
+			"name": "Top Level",
+			"parent": "null",
+			"children": [
+				{
+					"name": "Level 2: A",
+					"parent": "Top Level",
+					"children": [
+						{
+							"name": "Son of A",
+							"parent": "Level 2: A"
+						},
+						{
+							"name": "Daughter of A",
+							"parent": "Level 2: A"
+						}
+					]
+				},
+				{
+					"name": "Level 2: B",
+					"parent": "Top Level"
+				}
+			]
+		},
+		{
+			"name": "Top Level1",
+			"parent": "null",
+			"children": [
+				{
+					"name": "Level 2: A",
+					"parent": "Top Level1",
+					"children": [
+						{
+							"name": "Son of A",
+							"parent": "Level 2: A"
+						},
+						{
+							"name": "Daughter of A",
+							"parent": "Level 2: A"
+						}
+					]
+				},
+				{
+					"name": "Level 2: B",
+					"parent": "Top Level1"
+				}
+			]
+		}
+	]
+	return render(request, 'index1.html', {'data' :treeData})
