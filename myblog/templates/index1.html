@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-    {% load jsonify %}
+
   <head>
     <meta charset="utf-8">
 
@@ -38,7 +38,7 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 
 <script>
-
+console.log('script start')
 <!--var treeData = [-->
   <!--{-->
     <!--"name": "Top Level",-->
@@ -113,7 +113,10 @@ var svg = d3.select("body").append("svg")
 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 <!--root = treeData[0];-->
-root = {{ data[0]|jsonify }};
+var data = {{data|safe}}
+console.log(data)
+root = data[0]
+console.log(root)
 root.x0 = height / 2;
 root.y0 = 0;
 
@@ -221,6 +224,6 @@ function click(d) {
 }
 
 </script>
-
+{{data}}
   </body>
 </html>
