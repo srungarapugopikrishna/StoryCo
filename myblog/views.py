@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import MainForm,SomeForm
 from .models import Story,relations 
 from django.shortcuts import render_to_response
-import uuid
+import uuid,json
 # Create your views here.
 def index(request):
     return HttpResponse("Hello, Welcome to the UNIVERSE.")
@@ -134,4 +134,5 @@ def get_data(request):
 			]
 		}
 	]
-	return render(request, 'index1.html', {'data' :treeData})
+	json_string = json.dumps(treeData)
+	return render(request, 'index1.html', {'data' : json_string})
