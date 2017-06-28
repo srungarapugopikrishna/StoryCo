@@ -84,44 +84,66 @@ def some_view(request):
 	return render(request, 'test.html', {'form' :form})
 
 def get_jsonData(parent_id):
-	all_stories = Story.objects.get(story_id=parent_id)
 	all_relations = relations.objects.all()
-	child_id_list =[]
+	main_parent = "null"
 	for relation in all_relations:
-		if str(relation.parent_id) == str(all_stories.story_id):
-			print 'As Parent:'
-			print relation.parent_id, all_stories.story_id
-			child_id_list.append(relation)
-		elif str(relation.child_id) == str(all_stories.story_id):
-			print 'As Child:'
-			parent_relation = relation
+		if str(parent_id) == str(relation.child_id):
+			main_parent = relation.parent_id
 	data = {
-			"name": parent_id,
-			"parent": "null",
-			"children": [
-				{
-					"name": "Level 2: A",
-					"parent": "Top Level",
-					"children": [
-						{
-							"name": "Son of A",
-							"parent": "Level 2: A"
-						},
-						{
-							"name": "Daughter of A",
-							"parent": "Level 2: A"
-						}
-					]
-				},
-				{
-					"name": "Level 2: B",
-					"parent": "Top Level"
-				}
-			]
+			"name": str(parent_id),
+			"parent": str(main_parent),
+			"children": [get_jsonData(relation.child_id) for relation in all_relations if str(parent_id) == str(relation.parent_id)]
 		}
 	return data
 
+def visualize(request,s_id):
+	parent_id = s_id
+	jsonData = get_jsonData(parent_id)
+	#jsonData = {}
+	treeData = {
+		"name": "Top Level",
+		"parent": "null",
+		"children": [
+			{
+				"name": "Level 2: A",
+				"parent": "Top Level",
+				"children": [
+					{
+						"name": "Level 3: Son of A",
+						"parent": "Level 2: A",
+						"children": [
+							{
+								"name": "Level 4: Child",
+								"parent": "Level 3: Son of A",
+								"children": []
+							}
+						]
+					},
+					{
+						"name": "Level 3: Daughter of A",
+						"parent": "Level 2: A",
+						"children": []
+					}
+				]
+			},
+			{
+				"name": "Level 2: B",
+				"parent": "Top Level",
+				"children": []
+			}
+		]
+	}
+	context ={'data': treeData,
+			  'jsonData': json.dumps(jsonData)
+			  }
+
+	return render(request, 'index1.html', context)
+
+
+
 def get_data(request):
+
+
 	treeData ={
 			"name": "Top Level",
 			"parent": "null",

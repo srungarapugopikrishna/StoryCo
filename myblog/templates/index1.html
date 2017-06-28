@@ -113,7 +113,9 @@ var svg = d3.select("body").append("svg")
 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 <!--root = treeData[0];-->
-var data = {{data|safe}}
+<!--var data = {{data|safe}}-->
+var data = {{jsonData|safe}}
+<!--data = JSON.parse(data)-->
 console.log(data)
 root = data
 console.log(root)
@@ -224,5 +226,8 @@ function click(d) {
 }
 
 </script>
+    {{data}}
+  <br>
+    {{jsonData}}
   </body>
 </html>
