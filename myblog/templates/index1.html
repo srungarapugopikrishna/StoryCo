@@ -38,57 +38,6 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 
 <script>
-console.log('script start')
-<!--var treeData = [-->
-  <!--{-->
-    <!--"name": "Top Level",-->
-    <!--"parent": "null",-->
-    <!--"children": [-->
-      <!--{-->
-        <!--"name": "Level 2: A",-->
-        <!--"parent": "Top Level",-->
-        <!--"children": [-->
-          <!--{-->
-            <!--"name": "Son of A",-->
-            <!--"parent": "Level 2: A"-->
-          <!--},-->
-          <!--{-->
-            <!--"name": "Daughter of A",-->
-            <!--"parent": "Level 2: A"-->
-          <!--}-->
-        <!--]-->
-      <!--},-->
-      <!--{-->
-        <!--"name": "Level 2: B",-->
-        <!--"parent": "Top Level"-->
-      <!--}-->
-    <!--]-->
-  <!--},-->
-  <!--{-->
-    <!--"name": "Top Level1",-->
-    <!--"parent": "null",-->
-    <!--"children": [-->
-      <!--{-->
-        <!--"name": "Level 2: A",-->
-        <!--"parent": "Top Level1",-->
-        <!--"children": [-->
-          <!--{-->
-            <!--"name": "Son of A",-->
-            <!--"parent": "Level 2: A"-->
-          <!--},-->
-          <!--{-->
-            <!--"name": "Daughter of A",-->
-            <!--"parent": "Level 2: A"-->
-          <!--}-->
-        <!--]-->
-      <!--},-->
-      <!--{-->
-        <!--"name": "Level 2: B",-->
-        <!--"parent": "Top Level1"-->
-      <!--}-->
-    <!--]-->
-  <!--}-->
-<!--];-->
 
 
 // ************** Generate the tree diagram	 *****************
@@ -113,12 +62,10 @@ var svg = d3.select("body").append("svg")
 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 <!--root = treeData[0];-->
-<!--var data = {{data|safe}}-->
+
 var data = {{jsonData|safe}}
-<!--data = JSON.parse(data)-->
-console.log(data)
+
 root = data
-console.log(root)
 root.x0 = height / 2;
 root.y0 = 0;
 
@@ -226,8 +173,5 @@ function click(d) {
 }
 
 </script>
-    {{data}}
-  <br>
-    {{jsonData}}
-  </body>
+   </body>
 </html>
