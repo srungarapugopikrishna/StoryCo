@@ -6,7 +6,7 @@ class MainForm(forms.ModelForm):
 
     class Meta:
         model = Story
-        fields = ('title', 'text')
+        fields = ('title', 'text', 'genre_id')
 
 class SomeForm(forms.Form):
     CHOICES = ((1,1),
