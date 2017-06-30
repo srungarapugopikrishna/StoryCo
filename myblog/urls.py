@@ -11,4 +11,5 @@ urlpatterns = [
 	url(r'^(?P<s_id>.*)/StoryPage/$', views.StoryPage, name='StoryPage'),
 	url(r'^(?P<s_id>.*)/visualize/$', views.visualize, name='visualize'	),
 	url(r'^get_data$', views.get_data, name='get_data'),
+	url(r'^genreList$', views.genreList, name='genreList'),
 ]
