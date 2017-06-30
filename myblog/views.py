@@ -181,14 +181,15 @@ def get_data(request):
 
 def genreList(request):
 	all_stories = Story.objects.all()
-	#all_genres = Genres.objects.all()
-	#genre_dict = {}
+	all_genres = Genres.objects.all()
+	genre_dict = {}
 	#import pdb;pdb.set_trace()
 	for story in all_stories:
-		#print "Title:   ",story.title
-		# try:
-			#print story.genre_id
-		print story.genre_id.genre_id
-		# except:
-		# 	print "Exception:"
+		gnr_id = str(story.genre_id.genre_id)
+		temp = Genres.objects.get(genre_id=gnr_id)
+		if (genre_dict.has_key(temp.genre_name)):
+			genre_dict[temp.genre_name] = genre_dict[temp.genre_name] + 1
+		else:
+			genre_dict[temp.genre_name] = 1
+	print genre_dict
 	return render(request, 'GenreList.html')
