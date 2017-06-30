@@ -3,7 +3,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from .forms import MainForm,SomeForm
-from .models import Story,relations 
+from .models import Story,relations,Genres
 from django.shortcuts import render_to_response
 import uuid,json
 # Create your views here.
@@ -85,12 +85,14 @@ def some_view(request):
 
 def get_jsonData(parent_id):
 	all_relations = relations.objects.all()
+	curr_story = Story.objects.get(story_id=parent_id)
 	main_parent = "null"
 	for relation in all_relations:
 		if str(parent_id) == str(relation.child_id):
 			main_parent = relation.parent_id
 	data = {
-			"name": str(parent_id),
+			#"name": str(parent_id),
+			"name": str(curr_story.title),
 			"parent": str(main_parent),
 			"children": [get_jsonData(relation.child_id) for relation in all_relations if str(parent_id) == str(relation.parent_id)]
 		}
@@ -140,7 +142,6 @@ def visualize(request,s_id):
 	return render(request, 'index1.html', context)
 
 
-
 def get_data(request):
 
 
@@ -177,3 +178,17 @@ def get_data(request):
 		}
 
 	return render(request, 'index1.html', {'data' : treeData})
+
+def genreList(request):
+	all_stories = Story.objects.all()
+	#all_genres = Genres.objects.all()
+	#genre_dict = {}
+	#import pdb;pdb.set_trace()
+	for story in all_stories:
+		#print "Title:   ",story.title
+		# try:
+			#print story.genre_id
+		print story.genre_id.genre_id
+		# except:
+		# 	print "Exception:"
+	return render(request, 'GenreList.html')
