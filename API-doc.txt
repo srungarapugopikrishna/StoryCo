@@ -1,0 +1,414 @@
+
+Signup
+	POST
+	input:
+	{
+	
+		"email":"srungarapu1989@gmail.com",
+		"encPassword":"base64_encrypted_password"
+	}
+	outut:
+		Success:
+			200, Successfully Created
+		Failure:
+			409, Already existing email
+Signin
+	POST
+	input:
+	{
+		"email":"srungarapu1989@gmail.com",
+		"encPassword":"base64_encrypted_password"
+	}
+	outut:
+		Success:
+			200
+			Response:
+			Headers:
+				X-AuthToken:Bearer <token>
+		Falure:
+			400
+
+List Categories
+	GET
+	Input
+		Headers:
+			X-AuthToken: Bearer <token> (Optional)
+	Output:
+		Success:
+			200
+			{
+				message:"List of Categories",
+				result:[
+					{
+						"category_id":"cat_1",
+						"category_name":"Comedy",
+						"category_description":"Hilarious crowd sourced stories",
+						"count":{
+							"stories":20,
+							"poems":23,
+							"audio":2
+						},
+						"bg_image":"http://imgur.com/img/img_comedy",
+						"order":1
+					},
+					{
+						"category_id":"cat_2",
+						"category_name":"Science-Fiction",
+						"category_description":"Jump into the world of science fiction",
+						"count":{
+							"stories":10,
+							"poems":13,
+							"audio":1
+						},
+						"bg_image":"http://imgur.com/img/img_fiction",
+						"order":2
+					}
+				]
+			}
+		Failure:
+			500, Internal Server error
+
+Category info
+	GET localhost:8000/categories/cat_1
+	Input
+		Headers:
+			X-AuthToken: Bearer <token> (Optional)
+	Output:
+		Success:
+			200
+			{
+				"message":"List of items in this category",
+				"result":[
+					{
+						"item_type":"story",
+						"item_id":"story_1",
+						"item_title":"A funny Evening",
+						"item_description":"A giant squirrel had a cheese with Barack Obama",
+						"date_created":"DDMMYYYYTHHMMSS",
+						"date_modified":"DDMMYYYYTHHMMSS",
+						"time_req_sec":"600"
+					},
+					{
+						"item_type":"story",
+						"item_id":"story_2",
+						"item_title":"A vibrant morning",
+						"item_description":"Sun turns into moon",
+						"date_created":"DDMMYYYYTHHMMSS",
+						"date_modified":"DDMMYYYYTHHMMSS",
+						"time_req_sec":"600"
+					},
+					{
+						"item_type":"poem",
+						"item_id":"poem_1",
+						"item_title":"Ride along beach",
+						"item_description":"A romantic ride along beach",
+						"date_created":"DDMMYYYYTHHMMSS",
+						"date_modified":"DDMMYYYYTHHMMSS",
+						"time_req_sec":"100"
+					},
+					{
+						"item_type":"audio",
+						"item_id":"audio_1",
+						"item_title":"Ride along beach",
+						"item_description":"A romantic ride along beach",
+						"date_created":"DDMMYYYYTHHMMSS",
+						"date_modified":"DDMMYYYYTHHMMSS",
+						"time_req_sec":"100"
+					}
+				]
+			}
+		Failure:
+			500, Internal Server Error
+
+Item List
+	GET localhost:8000/items
+	Input
+		Headers:
+			X-AuthToken: Bearer <token> (Optional)
+	Output:
+		Success:
+			200
+			{
+				"message":"List of items in this category",
+				"result":[
+					{
+						"item_type":"story",
+						"item_id":"story_1",
+						"item_title":"A funny Evening",
+						"item_description":"A giant squirrel had a cheese with Barack Obama",
+						"date_created":"DDMMYYYYTHHMMSS",
+						"date_modified":"DDMMYYYYTHHMMSS",
+						"time_req_sec":"600",
+						"categories":[
+							{
+								"category_id":"cat_1",
+								"category_name":"Comedy"
+							},
+							{
+								"category_id":"cat_2",
+								"category_name":"Science Fiction"
+							},
+						]
+					},
+					{
+						"item_type":"story",
+						"item_id":"story_2",
+						"item_title":"A vibrant morning",
+						"item_description":"Sun turns into moon",
+						"date_created":"DDMMYYYYTHHMMSS",
+						"date_modified":"DDMMYYYYTHHMMSS",
+						"time_req_sec":"600"
+						"categories":[
+							{
+								"category_id":"cat_1",
+								"category_name":"Comedy"
+							},
+							{
+								"category_id":"cat_2",
+								"category_name":"Science Fiction"
+							},
+						]
+					},
+					{
+						"item_type":"poem",
+						"item_id":"poem_1",
+						"item_title":"Ride along beach",
+						"item_description":"A romantic ride along beach",
+						"date_created":"DDMMYYYYTHHMMSS",
+						"date_modified":"DDMMYYYYTHHMMSS",
+						"time_req_sec":"100"
+						"categories":[
+							{
+								"category_id":"cat_1",
+								"category_name":"Comedy"
+							},
+							{
+								"category_id":"cat_2",
+								"category_name":"Science Fiction"
+							},
+						]
+					},
+					{
+						"item_type":"audio",
+						"item_id":"audio_1",
+						"item_title":"Ride along beach",
+						"item_description":"A romantic ride along beach",
+						"date_created":"DDMMYYYYTHHMMSS",
+						"date_modified":"DDMMYYYYTHHMMSS",
+						"time_req_sec":"100"
+						"categories":[
+							{
+								"category_id":"cat_1",
+								"category_name":"Comedy"
+							},
+							{
+								"category_id":"cat_2",
+								"category_name":"Science Fiction"
+							},
+						]
+					}
+				]
+			}
+		Failure:
+			500, Internal Server Error
+Item info
+	GET localhost:8000/items/item_id
+	Input
+		Headers:
+			X-AuthToken: Bearer <token> (Optional)
+	Output:
+		Success:
+			200
+			{
+				"message":"List of episodes in this item",
+				"result":{
+					"item_type":"story",
+					"item_title":"A wal along Mercury",
+					"num_levels":10,
+					"episode":{
+						"episode_id":"episode_1",
+						"episode_description":"A crazy scientist gives life to mercury ",
+						"time_req_sec":"600",
+						"parent_episode":null,
+						"categories":[
+							{
+								"category_id":"cat_1",
+								"category_name":"Comedy"
+							},
+							{
+								"category_id":"cat_2",
+								"category_name":"Science Fiction"
+							},
+						],
+						"children":[
+							{
+								"episode_id":"episode_2",
+								"episode_description":"Mercury turns artificially intelligent",
+								"parent_episode":"episode_1",
+								"categories":[
+									{
+										"category_id":"cat_1",
+										"category_name":"Comedy"
+									},
+									{
+										"category_id":"cat_2",
+										"category_name":"Science Fiction"
+									},
+								],
+								"children":[]	
+							},
+							{
+								"episode_id":"episode_3",
+								"episode_description":"Mercury stabs Scientist",
+								"parent_episode":"episode_1",
+								"categories":[
+									{
+										"category_id":"cat_2",
+										"category_name":"Science Fiction"
+									},
+								],
+								"children":[]	
+							}
+						]
+					}
+				}
+			}
+		Failure:
+			500, Internal Server Error
+Episode Info Content
+	GET localhost:8000/items/item_id/episodes/episode_id/content
+	Input
+		Headers:
+			X-AuthToken: Bearer <token> (Optional)
+	Output:
+		Success:
+			200
+			{
+				"message":"Details about this episode",
+				"result":{
+					"episode_type":"story",
+					"episode_description":"Mercury Stabs Scientist",
+					"episode_content_type":"text",
+					"episode_content":"Episode big Content",
+					"episode_content_relative_url":"/data",
+					"categories":[
+						{
+							"category_id":"cat_2",
+							"category_name":"Science Fiction"
+						},
+					],
+				}
+			}
+
+Episode Info Graph
+	GET localhost:8000/items/item_id/episodes/episode_id/graph?height=2&depth=3
+	Input
+		Headers:
+			X-AuthToken: Bearer <token> (Optional)
+	Output:
+		Success:
+			200
+			{
+				"message":"Details about this episode",
+				"result":{
+						"episode_id":"episode_1",
+						"episode_description":"A crazy scientist gives life to mercury ",
+						"time_req_sec":"600",
+						"parent_episode":null,
+						"categories":[
+							{
+								"category_id":"cat_1",
+								"category_name":"Comedy"
+							},
+							{
+								"category_id":"cat_2",
+								"category_name":"Science Fiction"
+							},
+						],
+						"children":[
+							{
+								"episode_id":"episode_2",
+								"episode_description":"Mercury turns artificially intelligent",
+								"parent_episode":"episode_1",
+								"categories":[
+									{
+										"category_id":"cat_1",
+										"category_name":"Comedy"
+									},
+									{
+										"category_id":"cat_2",
+										"category_name":"Science Fiction"
+									},
+								],
+								"children":[]	
+							},
+							{
+								"episode_id":"episode_3",
+								"episode_description":"Mercury stabs Scientist",
+								"parent_episode":"episode_1",
+								"categories":[
+									{
+										"category_id":"cat_2",
+										"category_name":"Science Fiction"
+									},
+								],
+								"children":[]	
+							}
+						]
+					}
+			}
+
+Create New Item
+	POST localhost:8000/items/
+	Input
+		Headers:
+			X-AuthToken: Bearer <token> (Optional)
+		Body:
+			{
+				"item_type": "story",
+				"item_title" : "how to train dragon",
+				"item_description" : "A cartoon series",
+				"episode_details" : {
+					"episode_type":"story",
+					"episode_description":"Mercury Stabs Scientist",
+					"episode_content_type":"text/audio/video",
+					"episode_content":"Episode big Content",
+					"episode_content_relative_url":"Audio or video url from soundcloud or youtube",
+					"categories":["cat_2","cat_4","cat_5"],
+				}
+			}
+	Output:
+		Success:
+			200
+			{
+				"message":"Item creation details",
+				"result":{
+					"item_id":"item_1",
+					"episode_id":"episode_1"
+				}
+			}
+
+Create New Episode
+	POST localhost:8000/episodes/
+	Input
+		Headers:
+			X-AuthToken: Bearer <token> (Optional)
+		Body:
+			{
+				"parent_episode" : "episode_parent_id",
+				"episode_type":"story",
+				"episode_description":"Mercury Stabs Scientist",
+				"episode_content_type":"text/audio/video",
+				"episode_content":"Episode big Content",
+				"episode_content_relative_url":"Audio or video url from soundcloud or youtube",
+				"categories":["cat_2","cat_4","cat_5"],
+			}
+	Output:
+		Success:
+			200
+			{
+				"message":"Details about this episode",
+				"result":{
+					"episode_id" : "episode_2"
+				}
+			}
