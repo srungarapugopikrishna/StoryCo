@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from .forms import MainForm,SomeForm
+from .forms import MainForm
 from .models import Story,relations,Genres
 from django.shortcuts import render_to_response
 import uuid,json
@@ -73,15 +73,6 @@ def StoryPage(request,s_id):
 	print s_id
 	return render_to_response('StoryPage.html',data)
 
-def some_view(request):
-	form = SomeForm()
-	if request.method == "POST":
-		print 'hereeeee'
-		form = SomeForm(request.POST)
-		if form.is_valid():
-			like = form.cleaned_data['like']
-			print like
-	return render(request, 'test.html', {'form' :form})
 
 def get_jsonData(parent_id):
 	all_relations = relations.objects.all()
@@ -193,3 +184,5 @@ def genreList(request):
 			genre_dict[temp.genre_name] = 1
 	print genre_dict
 	return render(request, 'GenreList.html')
+
+#------------------------------------------------------------------------------------------
