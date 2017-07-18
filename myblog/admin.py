@@ -11,4 +11,3 @@ admin.site.register(Relationship)
 admin.site.register(Item)
 admin.site.register(Content_Type)
 admin.site.register(Representation_Type)
-
