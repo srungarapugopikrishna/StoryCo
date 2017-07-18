@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from .forms import MainForm
+from .forms import MainForm,ItemForm
 from .models import Story,relations,Genres
 from django.shortcuts import render_to_response
 import uuid,json
@@ -20,6 +20,14 @@ def home(request):
 	return render_to_response('home.html', data)
 def registered():
 	return HttpResponse("Registered in successfully")
+def item(request):
+	context = {}
+	context['form'] = ItemForm()
+	if request.method == 'POST':
+		pass
+	return render(request,'item.html',context)
+
+
 def editor(request):
 	context = {}
 	context['form'] = MainForm()
