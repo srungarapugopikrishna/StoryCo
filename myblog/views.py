@@ -3,7 +3,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from .forms import MainForm,ItemForm
-from .models import Story,relations,Genres
+from .models import Story,relations,Genres,Item
 from django.shortcuts import render_to_response
 import uuid,json
 # Create your views here.
@@ -24,7 +24,10 @@ def item(request):
 	context = {}
 	context['form'] = ItemForm()
 	if request.method == 'POST':
-		pass
+		data = Item(item_title = request.POST.get('item_title'), item_description = request.POST.get('item_description'),created_by = request.user)
+		data.save()
+		url = '/myblog/editor/'#+data.item_id
+		return HttpResponseRedirect('/myblog/home')
 	return render(request,'item.html',context)
 
 

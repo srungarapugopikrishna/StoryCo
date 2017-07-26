@@ -46,10 +46,10 @@ class Representation_Type(models.Model):
 
 class Item(models.Model):
 	item_id 			= 	models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
-	item_type 			= 	models.ForeignKey(Representation_Type,default=None)
+	item_type 			= 	models.ForeignKey(Representation_Type,default='NONE')
 	item_title 			=	models.CharField(max_length=500)
 	item_description	=	models.CharField(max_length=1000)
-	created_by			=	models.ForeignKey(User, editable=True)
+	created_by 			= 	models.ForeignKey(User, editable=True)
 	pub_date			=	models.DateTimeField(default=datetime.now,blank=True)
 
 

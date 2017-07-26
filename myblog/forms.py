@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Story,Item
+from .models import Story,Item,Episode
 
 class MainForm(forms.ModelForm):
 
@@ -13,3 +13,9 @@ class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
         fields = ('item_title', 'item_description')
+
+class EpisodeForm(forms.ModelForm):
+
+    class Meta:
+        model = Episode
+        fields = ('episode_type','episode_description','episode_content_type','episode_content','episode_content_relative_url','categories','created_by')
