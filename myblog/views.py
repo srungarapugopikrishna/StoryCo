@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from .forms import MainForm,ItemForm
-from .models import Story,relations,Genres,Item
+from .forms import MainForm,ItemForm,EpisodeForm
+from .models import Story,relations,Genres,Item,Episode
 from django.shortcuts import render_to_response
 import uuid,json
 # Create your views here.
@@ -20,17 +20,21 @@ def home(request):
 	return render_to_response('home.html', data)
 def registered():
 	return HttpResponse("Registered in successfully")
+
 def item(request):
+    context = {}
+    context['form'] = ItemForm()
+    if request.method == 'POST':
+        data = Item(item_title = request.POST.get('item_title'),item_description = request.POST.get('item_description'), created_by = request.user)
+        data.save()
+    return render(request, 'item.html', context)
+def episode(request):
 	context = {}
-	context['form'] = ItemForm()
+	context['form'] = EpisodeForm()
 	if request.method == 'POST':
-		data = Item(item_title = request.POST.get('item_title'), item_description = request.POST.get('item_description'),created_by = request.user)
+		data = Episode(episode_type = request.POST.get('episode_type'),episode_description = request.POST.get('episode_description'),episode_content_type = request.POST.get('episode_content_type'),episode_content = request.POST.get('episode_content'), episode_content_relative_url = request.POST.get('episode_content_relative_url'),categories = request.POST.get('categories'),created_by = request.POST.get('created_by'))
 		data.save()
-		url = '/myblog/editor/'#+data.item_id
-		return HttpResponseRedirect('/myblog/home')
-	return render(request,'item.html',context)
-
-
+	return render(request, 'episode.html', context)
 def editor(request):
 	context = {}
 	context['form'] = MainForm()
