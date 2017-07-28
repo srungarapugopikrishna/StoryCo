@@ -18,4 +18,4 @@ class EpisodeForm(forms.ModelForm):
 
     class Meta:
         model = Episode
-        fields = ('episode_type','episode_description','episode_content_type','episode_content','episode_content_relative_url','categories','created_by')
+        fields = ('episode_description','episode_type','episode_content_type','episode_content','episode_content_relative_url','categories')
