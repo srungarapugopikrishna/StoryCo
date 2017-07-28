@@ -3,7 +3,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from .forms import MainForm,ItemForm,EpisodeForm
-from .models import Story,relations,Genres,Item,Episode
+from .models import Story,relations,Genres,Item,Episode,Representation_Type,Content_Type
 from django.shortcuts import render_to_response
 import uuid,json
 # Create your views here.
@@ -25,14 +25,19 @@ def item(request):
     context = {}
     context['form'] = ItemForm()
     if request.method == 'POST':
-        data = Item(item_title = request.POST.get('item_title'),item_description = request.POST.get('item_description'), created_by = request.user)
+        item_typ = Item.objects.get(item_id=request.POST.get('item_type'))
+        data = Item(item_title = request.POST.get('item_title'),item_type = item_typ,item_description = request.POST.get('item_description'), created_by = request.user)
         data.save()
     return render(request, 'item.html', context)
 def episode(request):
 	context = {}
 	context['form'] = EpisodeForm()
+	print 'episode_type',request.POST.get('episode_type')
+	print 'episode_content_type',request.POST.get('episode_content_type')
 	if request.method == 'POST':
-		data = Episode(episode_type = request.POST.get('episode_type'),episode_description = request.POST.get('episode_description'),episode_content_type = request.POST.get('episode_content_type'),episode_content = request.POST.get('episode_content'), episode_content_relative_url = request.POST.get('episode_content_relative_url'),categories = request.POST.get('categories'),created_by = request.POST.get('created_by'))
+		episode_typ = Representation_Type.objects.get(representation_id=request.POST.get('episode_type'))
+		episode_content_typ = Content_Type.objects.get(content_id=request.POST.get('episode_content_type'))
+		data = Episode(episode_description = request.POST.get('episode_description'),episode_type = episode_typ,episode_content = request.POST.get('episode_content'), episode_content_type = episode_content_typ,episode_content_relative_url = request.POST.get('episode_content_relative_url'),categories = request.POST.get('categories'),created_by = request.user)
 		data.save()
 	return render(request, 'episode.html', context)
 def editor(request):
