@@ -13,4 +13,5 @@ urlpatterns = [
 	url(r'^genreList$', views.genreList, name='genreList'),
 	url(r'^item$', views.item, name='item'),
 	url(r'^episode$', views.episode, name='episode'),
+	url(r'^items$', views.items_list, name='items_list'),
 ]
