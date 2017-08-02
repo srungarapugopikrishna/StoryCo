@@ -25,9 +25,9 @@ def item(request):
     context = {}
     context['form'] = ItemForm()
     if request.method == 'POST':
-        item_typ = Item.objects.get(item_id=request.POST.get('item_type'))
-        data = Item(item_title = request.POST.get('item_title'),item_type = item_typ,item_description = request.POST.get('item_description'), created_by = request.user)
-        data.save()
+		item_typ = Representation_Type.objects.get(representation_id=request.POST.get('item_type'))
+		data = Item(item_title = request.POST.get('item_title'),item_type = item_typ,item_description = request.POST.get('item_description'), created_by = request.user)
+		data.save()
     return render(request, 'item.html', context)
 def episode(request):
 	context = {}
