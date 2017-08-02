@@ -92,7 +92,11 @@ def StoryPage(request,s_id):
 
 	print s_id
 	return render_to_response('StoryPage.html',data)
-
+def items_list(request):
+	list_items = Item.objects.all()
+	data = {"items": list_items}
+	# request.session['data'] = data
+	return render_to_response('items_list.html', data)
 
 def get_jsonData(parent_id):
 	all_relations = relations.objects.all()
