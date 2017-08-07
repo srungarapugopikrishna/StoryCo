@@ -58,6 +58,8 @@ class Item(models.Model):
 	item_description	=	models.CharField(max_length=1000)
 	created_by 			= 	models.ForeignKey(User, editable=True)
 	pub_date			=	models.DateTimeField(default=datetime.now,blank=True)
+	def __unicode__(self):
+		return self.item_title
 
 class Main_Item(models.Model):
 	mainItem_id = models.UUIDField(primary_key=True, default= uuid.uuid4, editable=True)
@@ -71,6 +73,8 @@ class Main_Item(models.Model):
 
 class Episode(models.Model):
 	episode_id 						= 	models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
+	#parent_id						= 	models.ForeignKey(Item,default=None,null=True)
+	parent_id						= 	object
 	episode_description 			= 	models.CharField(max_length=500)
 	episode_type 					= 	models.ForeignKey(Representation_Type,default=None, null=True)
 	episode_content_type 			= 	models.ForeignKey(Content_Type,default=None, null=True)
