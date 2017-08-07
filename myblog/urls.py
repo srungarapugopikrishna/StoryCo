@@ -14,4 +14,5 @@ urlpatterns = [
 	url(r'^item$', views.item, name='item'),
 	url(r'^episode$', views.episode, name='episode'),
 	url(r'^items$', views.items_list, name='items_list'),
+	url(r'^(?P<item_id>.*)/item_details/$', views.item_details, name='item_details'),
 ]
