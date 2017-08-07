@@ -21,14 +21,41 @@ def home(request):
 def registered():
 	return HttpResponse("Registered in successfully")
 
+
+def first_episode(request,parent_id):
+	context = {}
+	context['form'] = EpisodeForm()
+	parent = Item.objects.get(item_id = parent_id)
+	if request.method == 'POST':
+		episode_typ = Representation_Type.objects.get(representation_id=request.POST.get('episode_type'))
+		episode_content_typ = Content_Type.objects.get(content_id=request.POST.get('episode_content_type'))
+		data = Episode(episode_description=request.POST.get('episode_description'),
+					   parent_id = parent,
+					   episode_type=episode_typ,
+					   episode_content=request.POST.get('episode_content'),
+					   episode_content_type=episode_content_typ,
+					   episode_content_relative_url=request.POST.get('episode_content_relative_url'),
+					   categories=request.POST.get('categories'), created_by=request.user)
+		data.save()
+	return render(request, 'episode.html', context)
+
+
 def item(request):
     context = {}
     context['form'] = ItemForm()
     if request.method == 'POST':
 		item_typ = Representation_Type.objects.get(representation_id=request.POST.get('item_type'))
-		data = Item(item_title = request.POST.get('item_title'),item_type = item_typ,item_description = request.POST.get('item_description'), created_by = request.user)
+		data = Item(item_title = request.POST.get('item_title'),
+					item_type = item_typ,
+					item_description = request.POST.get('item_description'),
+					created_by = request.user)
 		data.save()
+		first_episode(request,data.item_id)
     return render(request, 'item.html', context)
+def item_details(request,item_id):
+	item_Object = Item.objects.get(item_id = item_id)
+	data = {"item": item_Object}
+	return render_to_response('item_details.html', data)
 def episode(request):
 	context = {}
 	context['form'] = EpisodeForm()
@@ -37,7 +64,13 @@ def episode(request):
 	if request.method == 'POST':
 		episode_typ = Representation_Type.objects.get(representation_id=request.POST.get('episode_type'))
 		episode_content_typ = Content_Type.objects.get(content_id=request.POST.get('episode_content_type'))
-		data = Episode(episode_description = request.POST.get('episode_description'),episode_type = episode_typ,episode_content = request.POST.get('episode_content'), episode_content_type = episode_content_typ,episode_content_relative_url = request.POST.get('episode_content_relative_url'),categories = request.POST.get('categories'),created_by = request.user)
+		data = Episode(episode_description = request.POST.get('episode_description'),
+					   episode_type = episode_typ,
+					   episode_content = request.POST.get('episode_content'),
+					   episode_content_type = episode_content_typ,
+					   episode_content_relative_url = request.POST.get('episode_content_relative_url'),
+					   categories = request.POST.get('categories'),
+					   created_by = request.user)
 		data.save()
 	return render(request, 'episode.html', context)
 def editor(request):
@@ -49,7 +82,9 @@ def editor(request):
 		print request.POST.get('title')
 		print request.POST.get('text')
 		print request.POST.get('pub_date')
-		data = Story(title = request.POST.get('title'),text = request.POST.get('text'),created_by = request.user)
+		data = Story(title = request.POST.get('title'),
+					 text = request.POST.get('text'),
+					 created_by = request.user)
 		data.save()
 	return render(request, 'editor.html',context)
 def editor_child(request,s_id):
@@ -62,7 +97,9 @@ def editor_child(request,s_id):
 		print request.POST.get('text')
 		print request.POST.get('pub_date')
 	#	relationship = relations(parent_id=s_id,child_id)		
-		data = Story(title = request.POST.get('title'),text = request.POST.get('text'),created_by = request.user)
+		data = Story(title = request.POST.get('title'),
+					 text = request.POST.get('text'),
+					 created_by = request.user)
 		data.save()
 		print (' parent_id : ',s_id,' child_id : ',data.story_id)
 		relationData = relations(parent_id=s_id,child_id=data.story_id)
