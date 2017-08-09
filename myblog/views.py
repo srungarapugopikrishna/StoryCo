@@ -3,7 +3,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from .forms import MainForm, ItemForm, EpisodeForm
-from .models import Story, Relations, Genres, Item, Episode, RepresentationType, ContentType
+from .models import Story, Relations, Genres, Item, Episode, Represent, Content
+#from .models import Story, Relations, Genres, Item, Represent, Content
 from django.shortcuts import render_to_response
 import uuid, json
 
@@ -28,13 +29,13 @@ def registered():
 
 
 def first_episode(request):
-    context = {}
-    context['form'] = EpisodeForm()
+    context = {'form' : EpisodeForm()}
     parent_id = request.session['parent_id']
     parent = Item.objects.get(item_id=parent_id)
+    print ('parent_id : ',parent_id)
     if request.method == 'POST':
-        episode_typ = RepresentationType.objects.get(representation_id=request.POST.get('episode_type'))
-        episode_content_typ = ContentType.objects.get(content_id=request.POST.get('episode_content_type'))
+        episode_typ = Represent.objects.get(representation_id=request.POST.get('episode_type'))
+        episode_content_typ = Content.objects.get(content_id=request.POST.get('episode_content_type'))
         data = Episode(episode_description=request.POST.get('episode_description'),
                        parent_id=parent,
                        episode_type=episode_typ,
@@ -48,18 +49,15 @@ def first_episode(request):
 
 def item(request):
     context = {'form': ItemForm()}
-    # context = {}
-    # context['form'] = ItemForm()
-
     if request.method == 'POST':
-        item_typ = RepresentationType.objects.get(representation_id=request.POST.get('item_type'))
+        item_typ = Represent.objects.get(representation_id=request.POST.get('item_type'))
         data = Item(item_title=request.POST.get('item_title'),
                     item_type=item_typ,
                     item_description=request.POST.get('item_description'),
                     created_by=request.user)
         data.save()
         request.session['parent_id'] = data.item_id
-        #return HttpResponseRedirect('/myblog/episode')
+        return HttpResponseRedirect('/myblog/episode')
     return render(request, 'item.html', context)
 
 
@@ -74,8 +72,8 @@ def episode(request):
     print ('episode_type', request.POST.get('episode_type'))
     print ('episode_content_type', request.POST.get('episode_content_type'))
     if request.method == 'POST':
-        episode_typ = RepresentationType.objects.get(representation_id=request.POST.get('episode_type'))
-        episode_content_typ = ContentType.objects.get(content_id=request.POST.get('episode_content_type'))
+        episode_typ = Represent.objects.get(representation_id=request.POST.get('episode_type'))
+        episode_content_typ = Content.objects.get(content_id=request.POST.get('episode_content_type'))
         data = Episode(episode_description=request.POST.get('episode_description'),
                        episode_type=episode_typ,
                        episode_content=request.POST.get('episode_content'),

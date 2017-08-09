@@ -43,7 +43,7 @@ class Category(models.Model):
         return self.category_label
 
 
-class ContentType(models.Model):
+class Content(models.Model):
     content_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
     content_type = models.CharField(max_length=20)
 
@@ -52,7 +52,7 @@ class ContentType(models.Model):
 
 
 # It specifies the weather the category is story or poem or picture
-class RepresentationType(models.Model):
+class Represent(models.Model):
     representation_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
     representation_type = models.CharField(max_length=20)
 
@@ -63,7 +63,7 @@ class RepresentationType(models.Model):
 class Item(models.Model):
     item_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
     item_title = models.CharField(max_length=500)
-    item_type = models.ForeignKey(RepresentationType, default=None, null=True)
+    item_type = models.ForeignKey(Represent, default=None, null=True)
     item_description = models.CharField(max_length=1000)
     created_by = models.ForeignKey(User, editable=True)
     pub_date = models.DateTimeField(default=datetime.now, blank=True)
@@ -89,8 +89,8 @@ class Episode(models.Model):
     # parent_id						= 	models.ForeignKey(Item,default=None,null=True)
     parent_id = object
     episode_description = models.CharField(max_length=500)
-    episode_type = models.ForeignKey(RepresentationType, default=None, null=True)
-    episode_content_type = models.ForeignKey(ContentType, default=None, null=True)
+    episode_type = models.ForeignKey(Represent, default=None, null=True)
+    episode_content_type = models.ForeignKey(Content, default=None, null=True)
     episode_content = HTMLField()
     episode_content_relative_url = models.CharField(validators=[URLValidator()], max_length=500)
     categories = models.CharField(max_length=500)

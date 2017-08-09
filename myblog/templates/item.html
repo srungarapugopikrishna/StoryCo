@@ -9,7 +9,7 @@
 <body>
 <form method="post" >
     {% csrf_token %}
-    <input type="hidden" name="itemForm" value="itemForm"/>
+    <input type="hidden" name="itemForm" value="item_Form"/>
  	{{form.as_p}}
     <button type="submit">Start an episode</button>
   </form>
