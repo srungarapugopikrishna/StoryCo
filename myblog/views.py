@@ -18,7 +18,7 @@ def home(request):
     # return HttpResponse("Logged in successfully")
 
     all_stories = Story.objects.all()
-    data = {"stories": all_stories}
+    data = {"stories" : all_stories}
     # request.session['data'] = data
     return render_to_response('home.html', data)
 
@@ -64,14 +64,13 @@ def item(request):
 
 
 def item_details(request, item_id):
-    item_Object = Item.objects.get(item_id=item_id)
-    data = {"item": item_Object}
+    item_object = Item.objects.get(item_id=item_id)
+    data = {"item": item_object}
     return render_to_response('item_details.html', data)
 
 
 def episode(request):
-    context = {}
-    context['form'] = EpisodeForm()
+    context = {'form' : EpisodeForm()}
     print ('episode_type', request.POST.get('episode_type'))
     print ('episode_content_type', request.POST.get('episode_content_type'))
     if request.method == 'POST':
@@ -89,8 +88,7 @@ def episode(request):
 
 
 def editor(request):
-    context = {}
-    context['form'] = MainForm()
+    context = {'form' : MainForm()}
     if request.method == 'POST':
         # if request.POST['form-type']=='storyForm':
         data = request.POST
@@ -102,8 +100,7 @@ def editor(request):
 
 
 def editor_child(request, s_id):
-    context = {}
-    context['form'] = MainForm()
+    context = {'form' : MainForm()}
     if request.method == 'POST':
         # if request.POST['form-type']=='storyForm':
         data = request.POST
@@ -250,7 +247,7 @@ def get_data(request):
     return render(request, 'index1.html', {'data': treeData})
 
 
-def genreList(request):
+def genrelist(request):
     all_stories = Story.objects.all()
     all_genres = Genres.objects.all()
     genre_dict = {}
@@ -262,7 +259,7 @@ def genreList(request):
             genre_dict[temp.genre_name] = genre_dict[temp.genre_name] + 1
         else:
             genre_dict[temp.genre_name] = 1
-    print genre_dict
+    print (genre_dict)
     return render(request, 'GenreList.html')
 
     # ------------------------------------------------------------------------------------------
