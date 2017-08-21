@@ -25,26 +25,6 @@ def home(request):
 def registered():
     return HttpResponse("Registered in successfully")
 
-
-# @login_required
-def first_episode(request, parent_id):
-    context = {}
-    context['form'] = EpisodeForm()
-    parent = Item.objects.get(item_id=parent_id)
-    if request.method == 'POST':
-        episode_typ = Representation_Type.objects.get(representation_id=request.POST.get('episode_type'))
-        episode_content_typ = Content_Type.objects.get(content_id=request.POST.get('episode_content_type'))
-        data = Episode(episode_description=request.POST.get('episode_description'),
-                       parent_id=parent,
-                       episode_type=episode_typ,
-                       episode_content=request.POST.get('episode_content'),
-                       episode_content_type=episode_content_typ,
-                       episode_content_relative_url=request.POST.get('episode_content_relative_url'),
-                       categories=request.POST.get('categories'), created_by=request.user)
-        data.save()
-    return render(request, 'episode.html', context)
-
-
 @login_required
 def item(request):
     context = {}

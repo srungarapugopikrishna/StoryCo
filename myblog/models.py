@@ -74,7 +74,6 @@ class Main_Item(models.Model):
 class Episode(models.Model):
 	episode_id 						= 	models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
 	parent_id						= 	models.ForeignKey(Item,default=None,null=True)
-	#parent_id						= 	object
 	episode_description 			= 	models.CharField(max_length=500)
 	episode_type 					= 	models.ForeignKey(Representation_Type,default=None, null=True)
 	episode_content_type 			= 	models.ForeignKey(Content_Type,default=None, null=True)
