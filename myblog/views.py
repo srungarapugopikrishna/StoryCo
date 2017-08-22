@@ -14,11 +14,8 @@ def index(request):
 
 
 def home(request):
-    # return HttpResponse("Logged in successfully")
-
     all_stories = Story.objects.all()
     data = {"stories": all_stories}
-    # request.session['data'] = data
     return render_to_response('home.html', data)
 
 
@@ -41,7 +38,6 @@ def item(request):
         context['item_id'] = data.item_id
         request.session['parent_id'] = str(data.item_id)
         return HttpResponseRedirect('/myblog/episode')
-        #return render(request, 'episode.html', context)#HttpResponseRedirect('/myblog/home')
     return render(request, 'item.html', context)
 
 
@@ -70,8 +66,6 @@ def episode(request):
                        created_by=request.user)
         data.save()
         del request.session['parent_id']
-        print "testing:::::::::"
-        #print request.session['parent_id']
         return HttpResponseRedirect('/myblog/items')
     return render(request, 'episode.html', context)
 
@@ -81,7 +75,6 @@ def editor(request):
     context = {}
     context['form'] = MainForm()
     if request.method == 'POST':
-        # if request.POST['form-type']=='storyForm':
         data = request.POST
         print request.POST.get('title')
         print request.POST.get('text')
@@ -98,12 +91,7 @@ def editor_child(request, s_id):
     context = {}
     context['form'] = MainForm()
     if request.method == 'POST':
-        # if request.POST['form-type']=='storyForm':
         data = request.POST
-        print request.POST.get('title')
-        print request.POST.get('text')
-        print request.POST.get('pub_date')
-        #	relationship = relations(parent_id=s_id,child_id)
         data = Story(title=request.POST.get('title'),
                      text=request.POST.get('text'),
                      created_by=request.user)
@@ -128,7 +116,6 @@ def StoryPage(request, s_id):
         elif str(relation.child_id) == str(all_stories.story_id):
             print 'As Child:'
             parent_relation = relation
-    # print 'idlen',len(id_list)
     data = {"curr_story": all_stories,
             "s_id": s_id,
             "relations_data": id_list,
@@ -142,7 +129,6 @@ def StoryPage(request, s_id):
 def items_list(request):
     list_items = Item.objects.all()
     data = {"items": list_items}
-    # request.session['data'] = data
     return render_to_response('items_list.html', data)
 
 
@@ -154,7 +140,6 @@ def get_jsonData(parent_id):
         if str(parent_id) == str(relation.child_id):
             main_parent = relation.parent_id
     data = {
-        # "name": str(parent_id),
         "name": str(curr_story.title),
         "parent": str(main_parent),
         "children": [get_jsonData(relation.child_id) for relation in all_relations if
@@ -166,7 +151,6 @@ def get_jsonData(parent_id):
 def visualize(request, s_id):
     parent_id = s_id
     jsonData = get_jsonData(parent_id)
-    # jsonData = {}
     treeData = {
         "name": "Top Level",
         "parent": "null",
@@ -247,7 +231,6 @@ def genreList(request):
     all_stories = Story.objects.all()
     all_genres = Genres.objects.all()
     genre_dict = {}
-    # import pdb;pdb.set_trace()
     for story in all_stories:
         gnr_id = str(story.genre_id.genre_id)
         temp = Genres.objects.get(genre_id=gnr_id)
@@ -257,5 +240,3 @@ def genreList(request):
             genre_dict[temp.genre_name] = 1
     print genre_dict
     return render(request, 'GenreList.html')
-
-    # ------------------------------------------------------------------------------------------
