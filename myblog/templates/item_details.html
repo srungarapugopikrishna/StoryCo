@@ -54,6 +54,9 @@
 <b>Title :<b> {{ item.item_title }}<br>
 <b>Type :<b> {{ item.item_type }}<br>
 <b>Desc :<b> {{ item.item_description }}<br>
-
+<b>Episodes:<b><br>
+  {% for details in episode%}
+    <a href="/myblog/{{ details.episode_id}}/episode_details" >{{details.episode_description}}<br>
+  {% endfor %}
 </body>
 </html>
