@@ -43,10 +43,24 @@ def item(request):
 
 def item_details(request, item_id):
     item_Object = Item.objects.get(item_id=item_id)
-    data = {"item": item_Object}
+    data = {
+                "message":'List of episodes in this item',
+                "item": item_Object
+            }
+    episode_details = Episode.objects.filter(parent_id=item_id)
+    if episode_details:
+        data['episode'] = episode_details
+        for i in episode_details:
+            print i.episode_id
+    else:
+        data['episode'] = None
     return render_to_response('item_details.html', data)
-
-
+def episode_details(request,episode_id):
+    episode = Episode.objects.get(episode_id=episode_id)
+    data = {
+                "episode":episode
+            }
+    return render_to_response('episode_details.html',data)
 @login_required
 def episode(request):
     context = {}
@@ -128,7 +142,10 @@ def StoryPage(request, s_id):
 
 def items_list(request):
     list_items = Item.objects.all()
-    data = {"items": list_items}
+    data = {
+            "message":'List of all the items',
+            "result": list_items
+           }
     return render_to_response('items_list.html', data)
 
 
