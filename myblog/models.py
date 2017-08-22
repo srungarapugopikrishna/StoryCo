@@ -63,7 +63,6 @@ class Item(models.Model):
 
 class Main_Item(models.Model):
 	mainItem_id = models.UUIDField(primary_key=True, default= uuid.uuid4, editable=True)
-	#mainItem_type = models.ForeignKey(Representation_Type, default= None)
 	mainItem_title = models.CharField(max_length=500)
 	mainItem_description = models.CharField(max_length=500)
 	created_by = models.ForeignKey(User, editable=True)
